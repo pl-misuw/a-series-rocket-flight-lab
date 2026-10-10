@@ -28,7 +28,7 @@ Everything uses **relative paths**, so the project works from any sub-path (user
 |------|---------|
 | Compare | True-scale, equal-height, and nested true-scale silhouettes generated from one shared station dataset, on a shared px-per-metre scale. |
 | 3D vehicle | Software-rendered perspective, depth-sorted mesh lathed from the same station dataset, with extruded fins, a recessed nozzle and a cutaway. |
-| Engine & liftoff | Cold-state pressure-fed and A4 turbopump schematics, each with its **own** sequence length, phase bar, force-balance diagram (net, weight, drag, thrust) and live altitude / vertical-speed / distance-flown telemetry. Below the transport sits a **flight-stage facts** grid: every stage of the current sequence with its time, name and one-line explanation, the active stage highlighted as the clock runs, and any stage jumpable to with a click. |
+| Engine & liftoff | Cold-state pressure-fed and A4 turbopump schematics, each with its **own** sequence length, phase bar, force-balance diagram (net, weight, drag, thrust) and live altitude / vertical-speed / distance-flown telemetry. There is **no play button**: the sequence runs itself and loops, the flow animation never stops, and clicking any stage in the bar (or in the facts grid below) lands the clock on that stage and carries on from there. The grid lists every stage of the current sequence with its time, name and one-line explanation and highlights the active one as the clock runs. |
 | Power plant | Interactive A4/V-2 propulsion cutaway schematic with five selectable start-up stages — peroxide, the steam drive, the propellants, ignition, full thrust. Click a stage in the bar to switch; the circuit animates continuously while the view is open, and an info box names and explains the selected stage. Hover or click any vessel, duct, pump or chamber to identify it. The arrangement follows the real aft section: tail-structure frame, annular T-stoff tank, turbopump unit, regenerative thrust chamber with cooling jacket and a turbine exhaust ducted out through the tail. |
 | Trajectory map | 35° oblique map whose local coastline and lettered facilities are **traced from the 1943 Bomber Command target chart (G.U. 4384)** already in this repo as `peenemunde.jpg`, set over Natural Earth land/coast geometry, with range rings and a flat-Earth ballistic model plus a first-order Earth-curvature correction. The natural-coastline layer is drawn only in the A4 view; the A1–A3 views are chart-only. Below the map a **per-vehicle development history** panel follows the selected model — its own header, narrative blocks and a note on what the map shows for it. The tab opens on **A1** each time it is entered. |
 
@@ -40,7 +40,11 @@ Everything uses **relative paths**, so the project works from any sub-path (user
 
   `R_curved = R / (1 − v²·cos²θ / (g·R_E))`, with `R_E = 6,371 km`.
 
-- **Playback** maps wall-clock time to simulation time via `performance.now()` — never by counting animation frames.
+- **Burnout-speed ceiling:** the trajectory slider is bounded per vehicle by the loss-free ideal
+  `Δv = I_sp·g₀·ln(m₀/m_f)` computed from that vehicle's own launch mass, propellant load and burn time —
+  A1 0–360, A2 0–520, A3 0–1,200, A4/V-2 0–2,200 m/s. The documented value is the default inside that band,
+  and any value above it is labelled in-app as a what-if.
+- **Playback** maps wall-clock time to simulation time via `performance.now()` — never by counting animation frames. The Engine sequence therefore needs no transport control: it starts on tab entry and restarts itself after the last stage, with a 0.25 s per-frame cap so a stalled tab cannot jump the clock.
 - Constant drag, no wind/weather/density models. These simplifications are labelled in-app.
 
 ## Where the data comes from
@@ -53,6 +57,7 @@ Everything uses **relative paths**, so the project works from any sub-path (user
 | Site and A–J target meaning | Historical Technical Museum Peenemünde, Deutsches Museum |
 | Map coastline + lettered facilities | RAF Bomber Command target chart G.U. 4384 (22 Jun 1943), shipped as `peenemunde.jpg` |
 | Wider land and sea background | Natural Earth 1:50m vectors (public domain) |
+| Burnout-speed ceilings, ballistic arc | Derived in-app from each vehicle's mass ratio (Tsiolkovsky, ideal no-drag) + `g₀` — a model, not a source |
 
 Full links, the chart calibration, the map build recipe and the shape-derivation notes are in
 `SOURCES.md`. Nothing is fetched at runtime and **no generator scripts ship with the repository** —

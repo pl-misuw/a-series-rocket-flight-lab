@@ -50,6 +50,15 @@ Nothing is fetched at run time either way, so the app works offline and from `fi
 | Mittelbau-Dora Memorial | Production and forced-labour history |
 | Bomber Command chart G.U. 4384 | Map coastline + lettered facilities (measured — see below) || Lord Hard Thrasher, *The V2 Story* pt 1 | A3 parachute failure, A4 ≈25 t early specification, A1 “may not have fired” wording || Natural Earth 1:50m | Land and sea geometry for the wider map background |
 | In-app ballistic model | The ideal no-drag arc and curvature correction — derived, **not** a source |
+| In-app Δv ceilings | Per-vehicle burnout-speed cap, `Δv = I_sp·g₀·ln(m₀/m_f)` from each vehicle's own mass ratio — derived, **not** a source |
+
+The **burnout-speed ceiling** shown under the trajectory slider is derived, not cited: each vehicle's
+launch mass, propellant load and burn time give a mass ratio, and the loss-free ideal for that ratio is
+`Δv = I_sp·g₀·ln(m₀/m_f)` with an `I_sp` of ≈170 s (A1), ≈190 s (A2, A3) and ≈187 s (A4). That gives
+≈360 m/s (A1), ≈520 m/s (A2), ≈1,200 m/s (A3) and ≈2,200 m/s (A4) — the physical ceiling, since no rocket
+can beat its own mass ratio. It is a bound on the *ideal* model, not a claim about any flight: the achieved
+figures (≈135 m/s for the A3, ≈1,600 m/s for the A4) sit below it by the gravity, drag and back-pressure
+losses the model omits, and the app labels any value above the documented one as a what-if.
 
 ## Map provenance
 

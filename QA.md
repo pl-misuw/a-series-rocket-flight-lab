@@ -55,6 +55,12 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
       and `a = 0` (verified at T−3.0 s), and N drops to zero once thrust exceeds weight (verified at T+20.8 s).
 - [x] The flow-condition formula switches with the architecture — pump discharge above chamber pressure for
       the A4, tank pressure above chamber pressure plus line loss for the pressure-fed vehicles.
+- [x] The A4 circuit is continuous end to end: peroxide and catalyst → steam generator → steam turbine →
+      turbopump unit (F/O pumps on the shaft from the turbine) → injector head → chamber, plus suction lines
+      from the two tanks into the pump unit, a regenerative cooling-jacket trace down the chamber wall, and a
+      turbine exhaust duct leaving through the tail. No flow path ends in mid-air, and no element of either
+      schematic leaves the `0 0 680 530` viewBox — checked programmatically for both architectures, including
+      the exhaust plume, which previously ran 15 px past the bottom edge.
 - [x] Weight is derived from the current mass (`m · 9.80665`), so the displayed weight and the propellant
       readout cannot drift apart; the static fallback values in the markup match the initial state.
 - [x] The fact file separates A4 scenarios (engine baseline / operational profile / steep research flight /
@@ -67,8 +73,8 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
       vehicles) with time, number, name and one-line copy, and rebuilds with the phase bar.
 - [x] The grid's active cell tracks the clock and is highlighted while the sequence runs.
 - [x] Clicking a stage cell seeks the timeline to that stage and updates every readout with it.
-- [x] The facts grid fills the card's former dead space below the transport, so the card height matches the
-      side column instead of leaving an empty block.
+- [x] The facts grid fills the card's former dead space below the stage bar and clock row, so the card height
+      matches the side column instead of leaving an empty block.
 
 ### Power plant
 
@@ -139,10 +145,33 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] Cold-state schematic visible immediately (rendered synchronously at init; `engineSVG`/`liftSVG`
       populate on load — fixed a free-variable `remain` bug that previously left the panel blank).
 - [x] Pressure-fed and turbopump tabs both render.
-- [x] Play, pause, reset, step, and scrub work; timeline reaches the full T−3 s → T+65 s range
-      (slider max corrected to 10000).
-- [x] Real time maps one wall-clock second to one simulated second (elapsed-time based).
-- [x] 4× and 8× use the same timeline at faster rates.
+- [x] There is no play button and no visible scrub bar (the range input is kept hidden as the clock's state
+      carrier): the sequence starts running as soon as the tab is entered and loops prime → liftoff → burn →
+      apogee/impact → prime with no transport control at all. Verified over a full wrap-back.
+- [x] Every stage in the phase bar is clickable and lands the clock exactly on that stage
+      (T−3.0 / +0.0 / +5.0 / +25.0 / +65.0 / +248.4 s on the A4), resuming the run from there; the
+      flight-stage facts cells do the same. The jump is applied in the same units the tick uses, so the next
+      frame continues from the clicked stage instead of snapping back to the start.
+- [x] The active stage is highlighted in **both** the phase bar and the facts grid on every vehicle, not just
+      the A4: the highlight is resolved by stage index, because `phaseList()` rebuilds fresh objects for the
+      pressure-fed vehicles, so the earlier identity comparison (`p === L[i]`) could never match there and
+      A1–A3 showed no highlight at all.
+- [x] A stage click lands *inside* the clicked stage rather than a fraction of a millisecond before its start
+      (the seek rounds up and draws the same value the run reads next frame, so a floating-point round trip
+      cannot leave the clock just below the boundary). Verified for all stages of A1 (3), A2 (6), A3 (6) and
+      A4 (8), through both the bar and the grid, with the CURRENT EVENT step number and name always matching
+      the clicked stage.
+- [x] The flow dashes are driven by their own wall-clock ticker, exactly as in the Power plant, so the
+      schematic is never frozen (verified by sampling a flow path's dash offset between frames).
+- [x] Timeline reaches the full T−3 s → T+65 s range (slider max corrected to 10000), and the early
+      sequences run at their own length (`powDur()`), not the A4's 68 s.
+- [x] Real time maps one wall-clock second to one simulated second (elapsed-time based); 4× and 8× use the
+      same timeline at faster rates, and a single frame is capped at 0.25 s so a stalled tab cannot jump the
+      clock.
+- [x] No pause or hold control remains: the run is uninterrupted from prime to the wrap-back, and clicking a
+      stage is the only way to move the clock by hand.
+- [x] Leaving the Engine tab halts both the clock and the flow ticker (verified: the clock value is
+      unchanged while another tab is open).
 - [x] Fuel and oxidiser masses decrease during powered operation; totals never go negative.
 - [x] Weight, net force, and acceleration use current mass.
 - [x] Rocket pitches over on screen (0° → ~46° from vertical) instead of translating.
@@ -168,8 +197,15 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
       drawn dashed and dimmed so an inferred position is never presented as a plotted one.
 - [x] The two map inputs are labelled as **burnout-state** inputs (flight-path angle at burnout, equivalent
       burnout speed) and the panel states the arc is started at the launch point with that state rather than
-      integrating the powered ascent.
-- [x] The arc model is described as a **flat-Earth ballistic arc with a first-order Earth-curvature
+      integrating the powered ascent.- [x] The burnout-speed slider is bounded **per vehicle** by the loss-free ideal from that vehicle's own mass
+      ratio (`Δv = I_sp·g₀·ln(m₀/m_f)`): A1 0–360, A2 0–520, A3 0–1,200, A4 0–2,200 m/s. The documented value
+      is the default inside the band; the note under the slider names the derivation, names the ceiling, and
+      flags any value above the documented one as a what-if. The band is re-applied on every model switch,
+      so a speed set on the A4 cannot be carried into the A1 view.
+- [x] The arc and the six ideal outputs follow the **live slider value**, not the stored default: with A1 at
+      350 m/s the outputs read 12.5 km flat / 12.5 km curved, 3.1 km apogee, 50 s, and the arc is drawn; with A1 at 0 m/s the map
+      prints “the A1 never flew — it was destroyed during its stand test”, and on A2–A4 at 0 m/s it prints
+      the raise-the-speed hint instead of the A1 sentence.- [x] The arc model is described as a **flat-Earth ballistic arc with a first-order Earth-curvature
       correction**, not as a spherical-Earth integration.
 - [x] Ring wording follows the vehicle: reference spacing plus the recorded impact distance for A1–A3,
       “documented ranges” only for the A4.
