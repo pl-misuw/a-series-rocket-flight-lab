@@ -38,6 +38,19 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] A4 propellant loads (`fuel`, `lox`) and the ballistic dry mass are read from the same data object.
 - [x] The A4 ballistic model no longer hard-codes propellant mass.
 
+### Engine & liftoff
+
+- [x] Both arches populate every readout — no blank panels or zero-filled telemetry.
+- [x] Each arch carries its own sequence length, phase bar and playback copy.
+- [x] Pressure-fed mode tracks the selected early vehicle and names it in the card title.
+- [x] A1 ends at the stand failure (+0.5 s); A2 flies to apogee and impact; A3 terminates thrust at loss of control and continues to impact.
+- [x] No early sequence stops in mid-air — every flying vehicle reaches the ground (impact phase at 0 m altitude).
+- [x] The A1 is reported as on the launch table throughout, since it never left the stand.
+- [x] No pre-launch motion: the vehicle is held on the stand until T+0 s (vertical speed and altitude stay at zero).
+- [x] Launch angle is applied from the horizontal, so the near-vertical A2 flight drifts far less than a 45° one.
+- [x] A4 output unchanged by the rework (net +172 kN at T+56.4 s; 25 km and 0 kN thrust at cutoff).
+- [x] Phase bar rebuilds when the arch or early vehicle changes, and the active phase highlight keeps step.
+
 ### Compare
 
 - [x] True Scale uses one shared px-per-metre scale for all vehicles.

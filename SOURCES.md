@@ -138,6 +138,25 @@ machine) rather than the 96-segment figure used in GPU pipelines such as Three.j
 separate 32-segment mesh and the cutaway volumes stay inside the real body radius. If a WebGL engine is
 ever adopted, the station list can be passed straight to `LatheGeometry` unchanged.
 
+### Engine-view flight model
+
+The pressure-fed (A1/A2/A3) sequence uses a two-degree-of-freedom gravity-turn integration per vehicle:
+thrust applied along a pitch program that runs from vertical to the article's own launch angle, mass
+depleting linearly over its burn, drag from `½ρv²·C_D A` with `C_D A = 0.34 · πD²/4` and an exponential
+atmosphere. Where the record says an article failed part-way through its burn, the model **terminates
+thrust at that recorded point and lets the vehicle fall ballistically to impact**, so the trajectory
+always completes: the **A1** ends at its stand failure (+0.5 s, no flight), the **A3** terminates thrust
+at loss of control (≈0.9 km — the recorded maximum height) and then continues unpowered to the sea, and
+the **A2** flies a normal burn to burnout, apogee and impact. The sequence never stops in mid-air.
+
+These are teaching approximations, not reconstructed telemetry: the model has no guidance, no winds,
+and a single drag coefficient, so the unpowered A3 continuation reaches roughly 1.7 km where the
+recorded maximum was ≈0.9 km, and the A2 drifts further than the ≈0.8 km recorded. Every such
+continuation is labelled as modelled in the phase copy, and the recorded figures always remain visible
+in the development-history panel rather than being replaced.
+
+The A4 sequence keeps its own separately tuned powered phase and ballistic coast.
+
 ### Outstanding verification
 
 The A4 profile should be checked first against the Smithsonian V-2 object record and a primary
