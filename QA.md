@@ -172,6 +172,11 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
       stage is the only way to move the clock by hand.
 - [x] Leaving the Engine tab halts both the clock and the flow ticker (verified: the clock value is
       unchanged while another tab is open).
+- [x] A **flight-progress line** sits above the stage bar: an orange fill grows with the clock across the whole
+      flight (0% at prime, 100% at the end of the sequence) with a 1 px tick at each stage, so the passage of
+      time stays visible even between stage changes. The fill lands exactly on the stage ticks (21.49% at A4
+      cutoff, 33.99% at the A3 failure, 99.7% at the A3 impact), it carries `role=progressbar` with a live
+      `aria-valuenow`, and it tracks the run without any transport control.
 - [x] Fuel and oxidiser masses decrease during powered operation; totals never go negative.
 - [x] Weight, net force, and acceleration use current mass.
 - [x] Rocket pitches over on screen (0° → ~46° from vertical) instead of translating.
