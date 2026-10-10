@@ -113,7 +113,9 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 
 ### Compare
 
-- [x] True Scale uses one shared px-per-metre scale for all vehicles.
+- [x] True Scale uses one shared pixel scale for all vehicles; the caption states it in the active display unit
+      (29.9 px per metre, 9.1 px per foot) and the board caption reads “Shared metre scale” or “Shared foot
+      scale” accordingly.
 - [x] Equal Height normalises height only and preserves each silhouette's aspect ratio.
 - [x] Nested true-scale overlay preserves real scale and proportions (A1/A2 remain tiny beside A4).
 - [x] Human-scale figure and width guides work.
@@ -131,6 +133,8 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 
 ### Geometry self-check (station data vs evidence matrix)
 
+- [x] `window.__lab.geometry()` returns the four L/D rows below (`consistent: true` for all four) for anyone
+      auditing the build; the app prints nothing to the console on load.
 - [x] A1 — 1.400 m × ⌀0.305 m, L/D 4.59 vs declared 4.59.
 - [x] A2 — 1.610 m × ⌀0.310 m, L/D 5.19 vs declared 5.19.
 - [x] A3 — 6.740 m × ⌀0.680 m, L/D 9.91 vs declared 9.91.
