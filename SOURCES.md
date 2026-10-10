@@ -50,6 +50,14 @@ Nothing is fetched at run time either way, so the app works offline and from `fi
 | Mittelbau-Dora Memorial | Production and forced-labour history |
 | Bomber Command chart G.U. 4384 | Map coastline + lettered facilities (measured — see below) || Lord Hard Thrasher, *The V2 Story* pt 1 | A3 parachute failure, A4 ≈25 t early specification, A1 “may not have fired” wording || Natural Earth 1:50m | Land and sea geometry for the wider map background |
 | In-app ballistic model | The ideal no-drag arc and curvature correction — derived, **not** a source |
+
+**Display units.** The app shows metric by default; the header toggle re-expresses *masses and lengths*
+for display only (1 ft = 0.3048 m, 1 lb = 0.45359237 kg, 1 mi = 1.609344 km, 1 t = 2,204.62 lb). The
+model itself stays SI, and quantities that belong to the physics rather than to the hardware keep their
+SI units in both modes — `m/s`, `kN`, `m/s²`, specific impulse and the Δv ceilings. The Earth radius in
+the formula notes is a length, so it converts with the rest. **Imperial figures are rounded for display,
+not the sources' own units:** the records and the 1943 chart behind the map are metric, except the chart's
+range rings, which are one statute mile apart.
 | In-app Δv ceilings | Per-vehicle burnout-speed cap, `Δv = I_sp·g₀·ln(m₀/m_f)` from each vehicle's own mass ratio — derived, **not** a source |
 
 The **burnout-speed ceiling** shown under the trajectory slider is derived, not cited: each vehicle's

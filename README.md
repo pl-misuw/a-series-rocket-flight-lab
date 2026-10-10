@@ -32,6 +32,19 @@ Everything uses **relative paths**, so the project works from any sub-path (user
 | Power plant | Interactive A4/V-2 propulsion cutaway schematic with five selectable start-up stages — peroxide, the steam drive, the propellants, ignition, full thrust. Click a stage in the bar to switch; the circuit animates continuously while the view is open, and an info box names and explains the selected stage. Hover or click any vessel, duct, pump or chamber to identify it. The arrangement follows the real aft section: tail-structure frame, annular T-stoff tank, turbopump unit, regenerative thrust chamber with cooling jacket and a turbine exhaust ducted out through the tail. |
 | Trajectory map | 35° oblique map whose local coastline and lettered facilities are **traced from the 1943 Bomber Command target chart (G.U. 4384)** already in this repo as `peenemunde.jpg`, set over Natural Earth land/coast geometry, with range rings and a flat-Earth ballistic model plus a first-order Earth-curvature correction. The natural-coastline layer is drawn only in the A4 view; the A1–A3 views are chart-only. Below the map a **per-vehicle development history** panel follows the selected model — its own header, narrative blocks and a note on what the map shows for it. The tab opens on **A1** each time it is entered. |
 
+## Display units
+
+The header toggle switches **masses and lengths** between metric and imperial (m ↔ ft, km ↔ mi, kg ↔ lb).
+Everything that renders a dimension follows it: airframe length, diameter and launch mass, the station
+line, the silhouette and human-scale labels, propellant loads and vehicle mass, altitude and
+distance-flown telemetry, trajectory ranges, map ring labels and the altitude axis, the
+development-history panel and the flight-stage fact file.
+
+It is a display switch only. The model computes in SI either way and the ballistic maths is untouched;
+derived quantities keep their own units — speeds (`m/s`), force (`kN`), acceleration (`m/s²`), specific
+impulse and the Δv ceilings stay SI in both modes. Imperial figures are rounded for display, and the
+sources behind them are metric (a 1943 chart ring, for instance, is a statute mile).
+
 ## Physics
 
 - **Mass** appears where it physically belongs: `m(t) = m_dry + m_fuel(t) + m_oxidizer(t)`, `W(t) = m(t)·g`, `a = (T − W − D)/m`.

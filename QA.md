@@ -61,6 +61,14 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
       turbine exhaust duct leaving through the tail. No flow path ends in mid-air, and no element of either
       schematic leaves the `0 0 680 530` viewBox — checked programmatically for both architectures, including
       the exhaust plume, which previously ran 15 px past the bottom edge.
+- [x] Flows also stay inside their hardware: the dashes use butt caps so they cannot bulge over a tank or
+      chamber outline, the tank labels sit clear of the feed pipes (the A4 level captions moved outboard of
+      the suction lines, the pressure-fed tank names moved inside their tanks), and the pressure-fed feeds
+      now end on the chamber walls instead of stopping 5 px short.
+- [x] The propellant **level fills** are clipped to their rounded tank outlines in both schematics (one
+      `clipPath` per tank, geometry identical to the tank rect), so the liquid can no longer show square
+      corners poking out past a rounded base. Without the clip each fill corner sits 40 px outside the
+      rounded corner's arc — the leak this replaced.
 - [x] Weight is derived from the current mass (`m · 9.80665`), so the displayed weight and the propellant
       readout cannot drift apart; the static fallback values in the markup match the initial state.
 - [x] The fact file separates A4 scenarios (engine baseline / operational profile / steep research flight /
@@ -230,6 +238,25 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] The panel stretches to fill the rest of the card (no dead space at desktop width) and collapses to its
       natural height without clipping at narrow widths; block content is centred so the slack sits evenly.
 - [x] Every claim in that panel is sourced in `SOURCES.md`, and casualty figures are given as a range.
+
+### Display units
+
+- [x] The header toggle switches **masses and lengths** between metric and imperial (m ↔ ft, km ↔ mi,
+      kg ↔ lb): airframe length/diameter/mass and the station line, silhouette and human-scale labels,
+      propellant loads and vehicle mass, altitude and distance-flown telemetry, trajectory outputs, map ring
+      labels, the altitude axis, the development-history panel and the fact file.
+- [x] The switch is display-only and lossless: toggling back returns every value to its exact original
+      string, the model keeps computing in SI, and speeds (`m/s`), force (`kN`), acceleration (`m/s²`) and
+      the Δv/Isp figures are unchanged by design.
+- [x] Scanned the whole document in both modes: no metric value survives in imperial mode and no imperial
+      value survives in metric mode, including the SVG text (rings, altitude axis, arc labels, silhouettes).
+- [x] The toggle sits next to the theme button and fits the header at 480 px and wider; the segmented
+      controls wrap below 620 px instead of pushing the page into horizontal overflow.
+- [x] The Power plant's component panel follows the switch as well, and each of the twelve parts shows its
+      **own** description (12 distinct strings in both modes): hovering or pinning a part rewrites the panel
+      from the metric source and re-applies the display units. The re-apply clears the element's own stored
+      source as well as its descendants' — clearing only descendants left the panel pinned to the first part's
+      text, in metric as well as imperial.
 
 ### Accessibility
 
