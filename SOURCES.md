@@ -35,7 +35,7 @@ schematics are **proportional explanatory models**, not manufacturing reconstruc
 | Smithsonian V-2 object record | A4 external envelope; the first cross-check for the A4 station list |
 | Smithsonian turbopump record | Turbopump-fed architecture shown in the engine view |
 | Imperial War Museums | Deployment context and the historical-responsibility panel |
-| AEHS RPE02-1 / RPE02-2 | A1–A3 predecessor history and V-2 propulsion detail |
+| AEHS RPE02-1 / RPE02-2 | A1–A3 predecessor history; V-2 propulsion detail; the power-plant circuit topology |
 | Historical Technical Museum Peenemünde | Site context and what the A–J targets were |
 | Deutsches Museum, NASA NTRS | Collection and technical reference |
 | Mittelbau-Dora Memorial | Production and forced-labour history |
@@ -58,6 +58,15 @@ The **map** in the Trajectory view is a vector interpretation built from two pub
 - **Wider land and coastline** are Natural Earth 1:50m vector data (`nvkelso/natural-earth-vector`,
   public domain), clipped and simplified into `map-data.js`.
 
+The two land sources are drawn at different zooms, because they are only accurate at their own scale.
+At the **A1–A3 chart views** the Natural Earth rings are useless — clipped at a 0.01° (~1.1 km) tolerance
+over a −7°…35° E box, their edges are kilometres long and sweep straight across the frame as hard
+diagonal lines — so those views draw **only the chart-traced outline** and the Natural Earth layer is kept
+for the **A4 view** (≈368 km), where its 1:50m detail is appropriate. The split is keyed to the selected
+vehicle, not to a zoom threshold, so no burnout-speed setting can reintroduce the coarse rings into an
+A1–A3 view. When an early vehicle is driven far enough that its view outgrows the chart trace, the map
+says so in the corner rather than inventing a coastline it does not have.
+
 No raster image and no tile server are used at runtime, so the map works offline. It is a simplified
 stand-off interpretation for teaching, **not** a georeferenced navigation chart. Magnetic bearings are
 indicated as magnetic; no historical magnetic-declination value is asserted.
@@ -78,6 +87,34 @@ produced once, offline:
 
 Result: **90 land rings / ≈3,800 points**, plus the coastline layer. Re-running this recipe is the only
 way to change the background; the app itself never fetches anything at runtime.
+
+### Historical context under the map
+
+The map view carries a short historical context block below it, and it **follows the selected vehicle**:
+each of A1, A2, A3 and A4 gets its own header (designation, year, length / mass / thrust / flew or not),
+three narrative blocks and a note on what the map actually shows for that vehicle. What it asserts, and
+where that comes from:
+
+- **The vehicle specifics** (A1's stand failure about half a second after ignition; the A2's two flights
+  with apogees of 2.2 km and 3.5 km and impacts about 0.8 km and 0.5 km out; the A3's four failures at
+  0.4–0.9 km; the A4's 3 October 1942 flight and ≈320 km operational range) — this project's own evidence
+  matrix above, which is built from the cited A-series sources.
+- **The A2 launches from Borkum, December 1934** — the standard account of the A2 flights, from the same
+  A-series histories cited at the top of this file (AEHS *A-series predecessors* and the Smithsonian
+  record). It is consistent with the apogees this project already tabulates.
+- **The chart's identity** (RAF Bomber Command target chart G.U. 4284, revised 22 June 1943) and the
+  meaning of the A–J letters — the map provenance above; the letters are the chart's own facility labels.
+- **Operation Hydra, night of 17/18 August 1943** — RAF Bomber Command's raid on Peenemünde, and the
+  dispersal that followed; it is the reason the programme moved underground.
+- **V-2 in service from September 1944; ≈3,000 launches; an estimated 5,000–9,000 deaths** — the total is
+  given as a *range* because published figures differ (≈2,700 of them in London, the rest in Antwerp and
+  elsewhere). It is teaching copy, **not** a casualty study.
+- **Mittelbau-Dora, ≈20,000 prisoner deaths, more than the weapon killed** — Mittelbau-Dora Memorial, the
+  institutional source linked in the app footer.
+
+The interpretation offered alongside those facts — that the A1 taught the feed-and-cooling lesson, that
+the A3 showed propulsion scaling faster than control, and so on — is this project's own teaching gloss,
+kept separate from the sourced facts above.
 
 ## Where the vehicle shapes come from
 
@@ -152,10 +189,39 @@ the **A2** flies a normal burn to burnout, apogee and impact. The sequence never
 These are teaching approximations, not reconstructed telemetry: the model has no guidance, no winds,
 and a single drag coefficient, so the unpowered A3 continuation reaches roughly 1.7 km where the
 recorded maximum was ≈0.9 km, and the A2 drifts further than the ≈0.8 km recorded. Every such
-continuation is labelled as modelled in the phase copy, and the recorded figures always remain visible
-in the development-history panel rather than being replaced.
+continuation is labelled as modelled in the phase copy, and the recorded figures always remain visible in
+the map's range readout and in the development-history panel below it, rather than being replaced by the
+model's output.
 
 The A4 sequence keeps its own separately tuned powered phase and ballistic coast.
+
+### Power-plant schematic (original drawing)
+
+The **Power plant** view is an **original cutaway-style schematic** drawn for this project. It is *not*
+traced from, and does not reproduce, any third-party drawing — in particular the AEHS `V-2Overall.jpg`
+general-arrangement sheet is cited as a source of the circuit topology **and of the physical layout of
+the aft section**, not copied. Only the arrangement is taken from the sources; every path, vessel and
+label is drawn here.
+
+The layout deliberately follows the real machine rather than a generic block diagram: an aft-section
+cutaway with the tail structure shown as a separate frame, the thrust chamber and nozzle as one
+regenerative unit fed through a cooling jacket, and the turbine exhaust ducted down and out through
+the tail skirt. The hydrogen-peroxide (T-stoff) tank is drawn as an **annular tank** wrapped around the
+aft end of the main tank rather than as a separate cylinder, and the liquid-oxygen tank is drawn with a
+**domed aft end**. All of this is teaching-level arrangement, not manufacturing geometry.
+
+The architecture itself is taken from the sources:
+
+- peroxide (T-stoff) is **pressure-fed** from its tank by nitrogen, through the catalyst (Z-stoff) into
+  the steam generator;
+- the resulting steam drives the **turbine**, which shares a shaft with the two main pumps;
+- alcohol-water (A-stoff) and liquid oxygen (B-stoff) are **pump-fed** to the injector;
+- chamber and nozzle form one regenerative thrust chamber, and the turbine exhaust leaves overboard.
+
+The five run-up stages in the view are an ordered teaching presentation of that circuit, not a
+reconstruction of a real start-up timeline. They are selected by hand from the stage bar and the
+circuit animates continuously; the stage info box gives each one a name and a plain-language explanation. Propellant loads quoted in the component notes (3,810 kg
+alcohol-water, 4,910 kg LOX, ≈245 kN) come from this project's own evidence matrix, above.
 
 ### Outstanding verification
 

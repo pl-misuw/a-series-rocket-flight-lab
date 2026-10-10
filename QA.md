@@ -50,6 +50,35 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] Launch angle is applied from the horizontal, so the near-vertical A2 flight drifts far less than a 45° one.
 - [x] A4 output unchanged by the rework (net +172 kN at T+56.4 s; 25 km and 0 kN thrust at cutoff).
 - [x] Phase bar rebuilds when the arch or early vehicle changes, and the active phase highlight keeps step.
+- [x] The flight-stage facts grid lists every stage of the current sequence (8 for the A4, 3–6 for the early
+      vehicles) with time, number, name and one-line copy, and rebuilds with the phase bar.
+- [x] The grid's active cell tracks the clock and is highlighted while the sequence runs.
+- [x] Clicking a stage cell seeks the timeline to that stage and updates every readout with it.
+- [x] The facts grid fills the card's former dead space below the transport, so the card height matches the
+      side column instead of leaving an empty block.
+
+### Power plant
+
+- [x] All twelve selectable parts render and respond — the eleven blocks plus the turbine exhaust duct; the description card updates on hover and pins on click.
+- [x] Hover highlighting works without re-rendering the SVG (no flicker).
+- [x] The drawing reads as a physical aft section, not a generic block diagram: tail-structure frame, domed
+      LOX tank, annular T-stoff tank, turbopump unit, regenerative chamber with a cooling-jacket outline,
+      fins and a turbine exhaust duct leaving through the tail skirt.
+- [x] Every element sits inside the `0 0 820 780` viewBox, with the hint line inside the frame.
+- [x] Flow lines follow their own hardware and stay legible: the chamber-jacket feed leaves the underside of
+      the turbopump unit (clear of the A-stoff feed that enters its left edge), and the turbine-exhaust flow
+      runs down the exhaust duct's centreline so the dashes sit inside the duct rather than beside it.
+- [x] There is no transport control: the stage bar switches stages by hand and the flow animation runs the
+      whole time the view is open.
+- [x] The stage bar highlights the selected stage and the circuit comes on in the documented order
+      (0 → 3 → 9 → 10 → 10 flowing paths across the five stages).
+- [x] The stage info box below the schematic always carries the stage name in its header plus a `Stage n of 5`
+      pill, and its body is a fixed-height block so the panel does not jump between stages.
+- [x] Clicking a component pins it without touching the selected stage; hovering still updates the panel.
+- [x] Flow animation advance is driven by absolute elapsed time, so it stays correct when the tab is throttled or backgrounded.
+- [x] Leaving the view stops the interval, and returning restarts it.
+- [x] The drawing is original — no third-party image is fetched, embedded or traced; only the circuit
+      topology and aft-section arrangement come from the cited sources.
 
 ### Compare
 
@@ -106,6 +135,20 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] A1 is not given an invented flight range (shows “No verified flight range”).
 - [x] Historical rings/points kept visually separate from the simulated ideal arc.
 - [x] Curvature-corrected range and Earth drop computed and displayed alongside flat-Earth range.
+- [x] Land layers are keyed to the selected vehicle, not to a zoom threshold: the A1–A3 views draw only
+      the chart-traced outline, the A4 view adds the Natural Earth rings. Verified at 0 and 1600 m/s burnout
+      speed on every vehicle: no slider value brings the coarse rings back into an A1–A3 view, and no
+      off-canvas coordinates appear in the A1–A3 document.
+- [x] When an early vehicle's view outgrows the chart trace (tested at 122 km extent), the map prints
+      “regional coastline not plotted at this scale” instead of drawing geometry it does not have.
+- [x] Open the Trajectory map tab and it starts on **A1** every time the tab is entered, whatever was selected
+      before (verified after selecting A4 elsewhere and returning).
+- [x] The development-history panel below the map follows the selected vehicle: each of A1–A4 renders its
+      own badge, year, meta line (length · mass · thrust · flew or not) and three narrative blocks plus a
+      full-width “On this map” note, and switching models re-renders it in place.
+- [x] The panel stretches to fill the rest of the card (no dead space at desktop width) and collapses to its
+      natural height without clipping at narrow widths; block content is centred so the slack sits evenly.
+- [x] Every claim in that panel is sourced in `SOURCES.md`, and casualty figures are given as a range.
 
 ### Accessibility
 
