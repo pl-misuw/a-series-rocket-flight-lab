@@ -47,9 +47,22 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] No early sequence stops in mid-air — every flying vehicle reaches the ground (impact phase at 0 m altitude).
 - [x] The A1 is reported as on the launch table throughout, since it never left the stand.
 - [x] No pre-launch motion: the vehicle is held on the stand until T+0 s (vertical speed and altitude stay at zero).
-- [x] Launch angle is applied from the horizontal, so the near-vertical A2 flight drifts far less than a 45° one.
+- [x] The engine pitch program is applied from the horizontal, so the near-vertical A2 flight drifts far less
+      than a 45° one.
 - [x] A4 output unchanged by the rework (net +172 kN at T+56.4 s; 25 km and 0 kN thrust at cutoff).
 - [x] Phase bar rebuilds when the arch or early vehicle changes, and the active phase highlight keeps step.
+- [x] On the launch table the force balance closes: thrust plus a `Table reaction N` row give zero net force
+      and `a = 0` (verified at T−3.0 s), and N drops to zero once thrust exceeds weight (verified at T+20.8 s).
+- [x] The flow-condition formula switches with the architecture — pump discharge above chamber pressure for
+      the A4, tank pressure above chamber pressure plus line loss for the pressure-fed vehicles.
+- [x] Weight is derived from the current mass (`m · 9.80665`), so the displayed weight and the propellant
+      readout cannot drift apart; the static fallback values in the markup match the initial state.
+- [x] The fact file separates A4 scenarios (engine baseline / operational profile / steep research flight /
+      first successful test) instead of implying one flight produced all of them, and the A2 line reports
+      its two flights separately.
+- [x] The fact file sits **in the flow** under the flight-stage grid, not overlaid on the liftoff animation: it
+      reads at full body size in two columns, its lines wrap instead of being squeezed into the rocket panel,
+      and the vehicles the current engine belongs to are highlighted (A4 in turbopump mode, A1–A3 pressure-fed).
 - [x] The flight-stage facts grid lists every stage of the current sequence (8 for the A4, 3–6 for the early
       vehicles) with time, number, name and one-line copy, and rebuilds with the phase bar.
 - [x] The grid's active cell tracks the clock and is highlighted while the sequence runs.
@@ -66,7 +79,7 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
       fins and a turbine exhaust duct leaving through the tail skirt.
 - [x] Every element sits inside the `0 0 820 780` viewBox, with the hint line inside the frame.
 - [x] Flow lines follow their own hardware and stay legible: the chamber-jacket feed leaves the underside of
-      the turbopump unit (clear of the A-stoff feed that enters its left edge), and the turbine-exhaust flow
+      the turbopump unit (clear of the A-Stoff feed — liquid oxygen — that enters its left edge), and the turbine-exhaust flow
       runs down the exhaust duct's centreline so the dashes sit inside the duct rather than beside it.
 - [x] There is no transport control: the stage bar switches stages by hand and the flow animation runs the
       whole time the view is open.
@@ -79,6 +92,10 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] Leaving the view stops the interval, and returning restarts it.
 - [x] The drawing is original — no third-party image is fetched, embedded or traced; only the circuit
       topology and aft-section arrangement come from the cited sources.
+- [x] German propellant designations are correct throughout: **A-Stoff = liquid oxygen**, **B-Stoff =
+      alcohol-water fuel**, T-Stoff = hydrogen peroxide, Z-Stoff = permanganate catalyst (verified against the
+      A4's standard designations). The two pumps are marked F and O so they cannot be misread as stoff codes.
+- [x] The injector note states the A4 was lit by an igniter, not by hypergolic contact between the propellants.
 
 ### Compare
 
@@ -86,6 +103,13 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] Equal Height normalises height only and preserves each silhouette's aspect ratio.
 - [x] Nested true-scale overlay preserves real scale and proportions (A1/A2 remain tiny beside A4).
 - [x] Human-scale figure and width guides work.
+- [x] The human figure is generated from the board's own metre scale, so its drawn height equals
+      `1.75 / 14.03 × 420` and its feet land **exactly on the baseline** (measured: height 52.4 px, feet at
+      y = 505 = the ground line). Limbs are placed parametrically (head 7.8 % of height, shoulders 20 %,
+      hips 52 %, arms 15 %), so the short neck and proportions cannot drift out of step with the figure's
+      height as they did when the stick figure was hand-placed.
+- [x] The human figure is **not** drawn in *Equal height* mode, where each silhouette is normalised to a
+      common height and no shared metre scale exists for a 1.75 m reference to mean anything.
 - [x] Vehicle selection updates the information panel.
 - [x] Silhouettes are generated from the shared station dataset (no separate hand-drawn path).
 - [x] Body/fin union has no internal seams; fins attach slightly inside the body.
@@ -135,6 +159,22 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] A1 is not given an invented flight range (shows “No verified flight range”).
 - [x] Historical rings/points kept visually separate from the simulated ideal arc.
 - [x] Curvature-corrected range and Earth drop computed and displayed alongside flat-Earth range.
+- [x] The sheet is cited as **G.U. 4384** (read off the scan at magnification, reference TARGET No 3/AIR/389);
+      the legend uses the sheet's own A–G key names and tags every letter with its basis
+      (_charted_ / _unnamed_ / _approx_), with H and J marked approximate in name and position.
+- [x] The markers carry the same names as the legend, because both read one table: C Power Plant,
+      E Experimental Installations, F Sleeping and Dining Quarters, G Experimental Airstrips, I lettered but
+      unnamed in the key, H and J approximate. Hovering a marker states its basis, and the H/J/I markers are
+      drawn dashed and dimmed so an inferred position is never presented as a plotted one.
+- [x] The two map inputs are labelled as **burnout-state** inputs (flight-path angle at burnout, equivalent
+      burnout speed) and the panel states the arc is started at the launch point with that state rather than
+      integrating the powered ascent.
+- [x] The arc model is described as a **flat-Earth ballistic arc with a first-order Earth-curvature
+      correction**, not as a spherical-Earth integration.
+- [x] Ring wording follows the vehicle: reference spacing plus the recorded impact distance for A1–A3,
+      “documented ranges” only for the A4.
+- [x] The blue curve is described as an illustrative arc through the recorded endpoints, not as a recorded
+      flight path.
 - [x] Land layers are keyed to the selected vehicle, not to a zoom threshold: the A1–A3 views draw only
       the chart-traced outline, the A4 view adds the Natural Earth rings. Verified at 0 and 1600 m/s burnout
       speed on every vehicle: no slider value brings the coarse rings back into an A1–A3 view, and no
@@ -153,6 +193,20 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 ### Accessibility
 
 - [x] WCAG AA text contrast in both themes.
+- [x] A `<noscript>` notice explains that every diagram is drawn at run time and links the written record
+      (`SOURCES.md`, `QA.md`) for readers without scripting.
+- [x] `SOURCES.md` is a real link in the page footer, next to a build and data-revision stamp.
+- [x] The video is **named but not linked** — header pill and notice both, while it is not yet public. The
+      pill is a plain `<span>` with no `href`, no pointer cursor and no hover state, so it does not read as
+      clickable. Nothing is fetched at run time, so the app still works offline and from `file://`.
+- [x] The page never describes itself as a companion (the word appears only in the disclaimer that denies it):
+      the `<title>`, notice and footer call it an unofficial fan-made study, and the creator is named only to
+      disclaim affiliation or to label the video this page follows.
+- [x] The footer states the build's scope, and `SOURCES.md` lists what the build deliberately does not cover.
+- [x] Figures that could read as contradicting the video are reconciled on the page: the A4's
+      ≈25 t early specification is shown against the 12,500 kg vehicle that flew, the A1 wording allows that
+      the chamber may not have fired, and the A3's four failures are split into the early parachute
+      deployment and the three that toppled into the sea.
 - [x] Visible focus states and semantic landmarks (`header/nav/main/section/aside/footer`).
 - [x] Form controls have labels; SVG content has `aria-label` text descriptions.
 - [x] `prefers-reduced-motion` disables non-essential animation.

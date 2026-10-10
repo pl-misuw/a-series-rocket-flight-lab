@@ -2,7 +2,7 @@
 
 An interactive, fan-made history and physics visualizer for the German **A1, A2, A3, and A4/V-2** rockets, centered on the Peenemünde test establishment.
 
-> **Fan-made companion piece.** This project was built by a fan as an independent study companion to **Lord Hard Trasher's** video. It is **not** affiliated with, sponsored by, or endorsed by the creator. The header contains a placeholder link where the video URL can be added.
+> **Unofficial fan-made study.** Made by a fan, independently — not an official companion, and not affiliated with, authorised by, sponsored by or endorsed by **Lord Hard Thrasher** or the channel. It follows *The V2 Story, part 1: 1934–1940 — A Pact with the Devil*, which is named in the header pill and the notice but **deliberately not linked** while it is not yet public. Adding the URL later means turning those two mentions back into anchors; nothing is fetched at run time either way, so the app works offline.
 
 ## Run it
 
@@ -30,12 +30,13 @@ Everything uses **relative paths**, so the project works from any sub-path (user
 | 3D vehicle | Software-rendered perspective, depth-sorted mesh lathed from the same station dataset, with extruded fins, a recessed nozzle and a cutaway. |
 | Engine & liftoff | Cold-state pressure-fed and A4 turbopump schematics, each with its **own** sequence length, phase bar, force-balance diagram (net, weight, drag, thrust) and live altitude / vertical-speed / distance-flown telemetry. Below the transport sits a **flight-stage facts** grid: every stage of the current sequence with its time, name and one-line explanation, the active stage highlighted as the clock runs, and any stage jumpable to with a click. |
 | Power plant | Interactive A4/V-2 propulsion cutaway schematic with five selectable start-up stages — peroxide, the steam drive, the propellants, ignition, full thrust. Click a stage in the bar to switch; the circuit animates continuously while the view is open, and an info box names and explains the selected stage. Hover or click any vessel, duct, pump or chamber to identify it. The arrangement follows the real aft section: tail-structure frame, annular T-stoff tank, turbopump unit, regenerative thrust chamber with cooling jacket and a turbine exhaust ducted out through the tail. |
-| Trajectory map | 35° oblique map whose local coastline and A–J target positions are **traced from the 1943 Bomber Command target chart (G.U. 4284)** already in this repo as `peenemunde.jpg`, set over Natural Earth land/coast geometry, with documented range rings and a constant-gravity + spherical-Earth-curvature ballistic model. The natural-coastline layer is drawn only in the A4 view; the A1–A3 views are chart-only. Below the map a **per-vehicle development history** panel follows the selected model — its own header, narrative blocks and a note on what the map shows for it. The tab opens on **A1** each time it is entered. |
+| Trajectory map | 35° oblique map whose local coastline and lettered facilities are **traced from the 1943 Bomber Command target chart (G.U. 4384)** already in this repo as `peenemunde.jpg`, set over Natural Earth land/coast geometry, with range rings and a flat-Earth ballistic model plus a first-order Earth-curvature correction. The natural-coastline layer is drawn only in the A4 view; the A1–A3 views are chart-only. Below the map a **per-vehicle development history** panel follows the selected model — its own header, narrative blocks and a note on what the map shows for it. The tab opens on **A1** each time it is entered. |
 
 ## Physics
 
 - **Mass** appears where it physically belongs: `m(t) = m_dry + m_fuel(t) + m_oxidizer(t)`, `W(t) = m(t)·g`, `a = (T − W − D)/m`.
-- **Ballistics:** flat range `R = v²·sin(2θ)/g`, then a curvature correction for a non-rotating spherical Earth:
+- **Ballistics:** flat range `R = v²·sin(2θ)/g`, then a first-order curvature correction (still a flat-Earth
+  projectile model, not a central-gravity integration):
 
   `R_curved = R / (1 − v²·cos²θ / (g·R_E))`, with `R_E = 6,371 km`.
 
@@ -50,7 +51,7 @@ Everything uses **relative paths**, so the project works from any sub-path (user
 | A1–A3 predecessor history, V-2 propulsion | Aircraft Engine Historical Society (RPE02) |
 | Deployment context, historical responsibility | Imperial War Museums, Mittelbau-Dora Memorial |
 | Site and A–J target meaning | Historical Technical Museum Peenemünde, Deutsches Museum |
-| Map coastline + A–J target positions | RAF Bomber Command target chart G.U. 4284 (22 Jun 1943), shipped as `peenemunde.jpg` |
+| Map coastline + lettered facilities | RAF Bomber Command target chart G.U. 4384 (22 Jun 1943), shipped as `peenemunde.jpg` |
 | Wider land and sea background | Natural Earth 1:50m vectors (public domain) |
 
 Full links, the chart calibration, the map build recipe and the shape-derivation notes are in

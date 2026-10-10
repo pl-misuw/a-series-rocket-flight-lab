@@ -22,11 +22,20 @@ schematics are **proportional explanatory models**, not manufacturing reconstruc
 7. **Mittelbau-Dora Memorial** — https://www.dora.de/en/ (historical responsibility panel)
 8. **Natural Earth** — 1:50m cultural and physical vectors, `nvkelso/natural-earth-vector`, public
    domain. https://github.com/nvkelso/natural-earth-vector
-9. **RAF Bomber Command target chart, sheet G.U. 4284** — “Peenemünde (Greifswald)”, *Revised Map*,
+9. **RAF Bomber Command target chart, sheet G.U. 4384** — “Peenemünde (Greifswald)”, *Revised Map*,
    22 June 1943, 1:100,000. Shipped with this repository as `peenemunde.jpg`. Source for the map's
    local coastline and the A–J target letters.
-10. **Lord Hard Trasher (video)** — the subject of this fan-made companion piece. The header link is a
-    placeholder until the URL is supplied.
+10. **Lord Hard Thrasher (video)** — *The V2 Story : 1934–1940 — A Pact with the Devil*,
+   48 min 18 s, narrated video. Named in `a-series-flight-lab.html` but **deliberately not linked** while it
+   is not yet public. It is the source for the A3 recovery-parachute failure, the A4's
+   ≈25 t early specification and the note that the chamber may not have fired on the A1. Its own chapter
+   list and description were read on 2026-10-10.
+
+**The video is named, not linked.** `a-series-flight-lab.html` mentions the video twice — the header pill
+`#videoLink` (now a plain `<span>`, styled as a muted dashed pill) and the notice — and carries **no
+outbound URL for it**, at the author's request, because the video is not yet public. When it is, adding the
+link means turning both mentions back into anchors with `href`, `target="_blank"` and `rel="noopener"`.
+Nothing is fetched at run time either way, so the app works offline and from `file://`.
 
 ## What each source supplies
 
@@ -39,20 +48,28 @@ schematics are **proportional explanatory models**, not manufacturing reconstruc
 | Historical Technical Museum Peenemünde | Site context and what the A–J targets were |
 | Deutsches Museum, NASA NTRS | Collection and technical reference |
 | Mittelbau-Dora Memorial | Production and forced-labour history |
-| Bomber Command chart G.U. 4284 | Map coastline + A–J target positions (measured — see below) |
-| Natural Earth 1:50m | Land and sea geometry for the wider map background |
+| Bomber Command chart G.U. 4384 | Map coastline + lettered facilities (measured — see below) || Lord Hard Thrasher, *The V2 Story* pt 1 | A3 parachute failure, A4 ≈25 t early specification, A1 “may not have fired” wording || Natural Earth 1:50m | Land and sea geometry for the wider map background |
 | In-app ballistic model | The ideal no-drag arc and curvature correction — derived, **not** a source |
 
 ## Map provenance
 
 The **map** in the Trajectory view is a vector interpretation built from two public sources:
 
-- **Local geography and the A–J target letters** are read from the 1943 RAF Bomber Command target chart
-  `peenemunde.jpg` (sheet *G.U. 4284, Revised Map, 22 June 1943, 1:100,000*, “PEENEMÜNDE (GREIFSWALD)”).
+- **Local geography and the lettered facilities** are read from the 1943 RAF Bomber Command target chart
+  `peenemunde.jpg` (sheet *G.U. 4384, Revised Map, 22 June 1943*, reference **TARGET No 3/AIR/389**,
+  “PEENEMÜNDE (GREIFSWALD)”).
+  **The sheet's own key lists only A–G**, with the names used in the app: A Experimental Station,
+  B Factory Buildings, C Power Plant, D Unidentified Buildings, E Experimental Installations, F Sleeping
+  and Dining Quarters, G Experimental Airstrips. The letter **I** is also painted on the map but has no key
+  entry, so it is labelled in the app as lettered-but-unnamed. **H and J are not lettered on the sheet at
+  all**; their positions and names are approximate and are tagged as such in the legend.
+  *(Correction: earlier revisions of this file cited the sheet as “G.U. 4284” and gave different facility
+  names for E, F and G. Reading the scan at magnification shows 4384 and the names above.)*
   The chart's printed range rings are 1 mile apart; they measure ≈57 px per mile in the scan, giving
   ≈28 m per pixel. The peninsula coastline and the lettered targets were read at that scale, true north up,
-  relative to target **A**. The sheet's target list runs A–J, but only A–G and I are lettered on the map
-  itself — **H and J are therefore approximate** and are labelled as such in the app.
+  relative to target **A**. Only **A–G and I** are lettered on the map itself; the key names A–G and
+  says nothing about I, and **H and J are therefore approximate in both position and name** — the app
+  labels each of A–J with its basis (charted / unnamed / approx).
   `peenemunde.jpg` is kept in the repository as a **provenance document only**: the app never loads it at
   runtime, so it is not part of the shipped payload.
 - **Wider land and coastline** are Natural Earth 1:50m vector data (`nvkelso/natural-earth-vector`,
@@ -95,15 +112,18 @@ each of A1, A2, A3 and A4 gets its own header (designation, year, length / mass 
 three narrative blocks and a note on what the map actually shows for that vehicle. What it asserts, and
 where that comes from:
 
-- **The vehicle specifics** (A1's stand failure about half a second after ignition; the A2's two flights
-  with apogees of 2.2 km and 3.5 km and impacts about 0.8 km and 0.5 km out; the A3's four failures at
-  0.4–0.9 km; the A4's 3 October 1942 flight and ≈320 km operational range) — this project's own evidence
-  matrix above, which is built from the cited A-series sources.
+- **The vehicle specifics** (A1 destroyed on its test stand shortly after ignition — accounts differ on the
+  description and timing, and the half-second failure point used in the animation is a modelling choice, not
+  a sourced figure; the A2's two flights with apogees of 2.2 km and 3.5 km and impacts about 0.8 km and
+  0.5 km out; the A3's four failed attempts at 0.4–0.9 km; the A4's 3 October 1942 flight and ≈320 km
+  operational range) — this project's own evidence matrix above, which is built from the cited A-series
+  sources.
 - **The A2 launches from Borkum, December 1934** — the standard account of the A2 flights, from the same
   A-series histories cited at the top of this file (AEHS *A-series predecessors* and the Smithsonian
   record). It is consistent with the apogees this project already tabulates.
-- **The chart's identity** (RAF Bomber Command target chart G.U. 4284, revised 22 June 1943) and the
-  meaning of the A–J letters — the map provenance above; the letters are the chart's own facility labels.
+- **The chart's identity** (RAF Bomber Command target chart G.U. 4384, revised 22 June 1943) and the
+  meaning of the A–J letters — the map provenance above; A–G and I are lettered on the sheet and their
+  names are read from its own key, while H and J are approximate and not lettered at all.
 - **Operation Hydra, night of 17/18 August 1943** — RAF Bomber Command's raid on Peenemünde, and the
   dispersal that followed; it is the reason the programme moved underground.
 - **V-2 in service from September 1944; ≈3,000 launches; an estimated 5,000–9,000 deaths** — the total is
@@ -215,7 +235,11 @@ The architecture itself is taken from the sources:
 - peroxide (T-stoff) is **pressure-fed** from its tank by nitrogen, through the catalyst (Z-stoff) into
   the steam generator;
 - the resulting steam drives the **turbine**, which shares a shaft with the two main pumps;
-- alcohol-water (A-stoff) and liquid oxygen (B-stoff) are **pump-fed** to the injector;
+- alcohol-water (**B-Stoff**) and liquid oxygen (**A-Stoff**) are **pump-fed** to the injector;
+  the German designations matter and are easy to reverse: **A-Stoff = liquid oxygen**, **B-Stoff = the
+  alcohol-water fuel**, **T-Stoff = hydrogen peroxide**, **Z-Stoff = the permanganate catalyst**. The app
+  labels them this way throughout; the two pumps are marked F (fuel) and O (oxidiser) so they cannot be
+  confused with the stoff codes;
 - chamber and nozzle form one regenerative thrust chamber, and the turbine exhaust leaves overboard.
 
 The five run-up stages in the view are an ordered teaching presentation of that circuit, not a
@@ -301,9 +325,43 @@ Baseline values used by the app (rounded). “±” marks reported spread across
 - The operational **V-2** is the **A4**. This build covers the **A1, A2, A3 and A4/V-2**.
 - The Aggregat-5 experimental vehicle has been removed from this build.
 
+## Scope — what this build does not cover
+
+This lab is an unofficial fan-made study of the vehicles in *The V2 Story, part 1: 1934–1940* and
+deliberately covers **only the vehicles
+and their engineering**, A1 through A4/V-2. The episode's wider ground is **not** reproduced here, and
+its absence is a scope decision, not a claim that it did not happen:
+
+- the German rocket movement before 1933 (the Verein für Raumschiffahrt, the Raketenflugplatz,
+  *Die Rakete*), and the Treaty of Versailles loophole that made rockets army business;
+- the programme's economics (≈1–2% of German annual GDP; the comparison with the Manhattan Project);
+- the people — Becker, Dornberger, von Braun, Thiel, Walter and the firms they worked with;
+- the Peenemünde East / West split between army and Luftwaffe, the site's cost and the other programmes
+  run there (V-1/Fi 103, Wasserfall, He 177, Fritz X, Rheintochter);
+- guidance development, the wind tunnel built at Peenemünde, and the un-damped engine frame's effect on
+  the guidance bay;
+- later Aggregat designs — the A5, A7, A9 and A10 — and the fact that A5 flew in 1938, before the A4, so
+  the sequence was not a linear progression;
+- the post-war V-2 legacy in the US and Soviet programmes.
+
+Two figures the episode gives are reconciled rather than repeated as-is:
+
+- **“25 tons when fuelled.”** That is the 1936–39 specification figure. The vehicle that flew was about
+  half that — 12,500 kg at launch — and the app states both so the two do not read as a contradiction.
+- **“The A1… it didn't fire.”** Accounts differ on the technical description and the timing of the A1's
+  failure, including whether the chamber fired at all; the app now says exactly that, and the half-second
+  mark it draws as a modelling choice is labelled as one.
+
+The episode is also internally inconsistent in two places, which this build does not inherit: it dates
+the A2 launches to December 1934 and, four minutes later, to a month after von Braun's December 1934
+doctorate; and it gives the A4 requirement as “over 200 km” and “over 200 miles”. The app uses
+December 1934 and the documented ≈320 km operational range.
+
 ## Model limitations
 
-- Physics uses constant gravity (`g = 9.80665 m/s²`) and a **non-rotating spherical Earth**
+- Physics uses constant gravity (`g = 9.80665 m/s²`) and a **flat-Earth ballistic model with a first-order
+  Earth-curvature correction** — `R_curved = R_flat / (1 − v²cos²θ / (gR_E))`. That is *not* a central-gravity
+  integration of a non-rotating spherical Earth, and the app says so where the model is described.
   (`R_E = 6,371 km`) for the curvature-corrected range. It omits powered ascent, changing mass,
   aerodynamic drag (constant-drag teaching parameter only), guidance, and winds.
 - The pressure-fed flow equation `ṁ = C_d A √(2 ρ ΔP)` is a simplified educational form; mass is not
