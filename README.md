@@ -1,0 +1,82 @@
+# A-Series Flight Lab
+
+An interactive, fan-made history and physics visualizer for the German **A1, A2, A3, and A4/V-2** rockets, centered on the Peenemünde test establishment.
+
+> **Fan-made companion piece.** This project was built by a fan as an independent study companion to **Lord Hard Trasher's** video. It is **not** affiliated with, sponsored by, or endorsed by the creator. The header contains a placeholder link where the video URL can be added.
+
+## Run it
+
+The whole application is a single static HTML file — no server, no build step, no network dependency.
+
+1. Open `a-series-flight-lab.html` in any modern browser (double-click it), **or**
+2. Serve the folder and open it (optional): `python -m http.server` then visit `http://localhost:8000/`.
+
+It works with the network disabled (all assets are inline; no CDNs).
+
+## Hosting on GitHub Pages
+
+1. Push this folder (or the whole repo) to GitHub.
+2. In the repository: **Settings → Pages → Source = Deploy from a branch**, select your branch and the root folder.
+3. The site is served at `https://<user>.github.io/<repo>/`.
+4. `index.html` (root) automatically forwards to `a-series-flight-lab.html`; `.nojekyll` stops Jekyll from re-processing the folder.
+
+Everything uses **relative paths**, so the project works from any sub-path (user pages and project pages alike).
+
+## What's inside
+
+| View | Purpose |
+|------|---------|
+| Compare | True-scale, equal-height, and nested true-scale silhouettes generated from one shared station dataset, on a shared px-per-metre scale. |
+| 3D vehicle | Software-rendered perspective, depth-sorted mesh lathed from the same station dataset, with extruded fins, a recessed nozzle and a cutaway. |
+| Engine & liftoff | Cold-state pressure-fed and A4 turbopump schematics with a real-time / 4× / 8× playback clock, a force-balance diagram (net, weight, drag, thrust) and a time-compressed ballistic coast, apogee and descent. |
+| Trajectory map | 35° oblique map whose local coastline and A–J target positions are **traced from the 1943 Bomber Command target chart (G.U. 4284)** already in this repo as `peenemunde.jpg`, set over Natural Earth land/coast geometry, with documented range rings and a constant-gravity + spherical-Earth-curvature ballistic model. |
+
+## Physics
+
+- **Mass** appears where it physically belongs: `m(t) = m_dry + m_fuel(t) + m_oxidizer(t)`, `W(t) = m(t)·g`, `a = (T − W − D)/m`.
+- **Ballistics:** flat range `R = v²·sin(2θ)/g`, then a curvature correction for a non-rotating spherical Earth:
+
+  `R_curved = R / (1 − v²·cos²θ / (g·R_E))`, with `R_E = 6,371 km`.
+
+- **Playback** maps wall-clock time to simulation time via `performance.now()` — never by counting animation frames.
+- Constant drag, no wind/weather/density models. These simplifications are labelled in-app.
+
+## Where the data comes from
+
+| Content | Source |
+|---|---|
+| A4/V-2 external envelope, propellant loads | Smithsonian National Air and Space Museum object records |
+| A1–A3 predecessor history, V-2 propulsion | Aircraft Engine Historical Society (RPE02) |
+| Deployment context, historical responsibility | Imperial War Museums, Mittelbau-Dora Memorial |
+| Site and A–J target meaning | Historical Technical Museum Peenemünde, Deutsches Museum |
+| Map coastline + A–J target positions | RAF Bomber Command target chart G.U. 4284 (22 Jun 1943), shipped as `peenemunde.jpg` |
+| Wider land and sea background | Natural Earth 1:50m vectors (public domain) |
+
+Full links, the chart calibration, the map build recipe and the shape-derivation notes are in
+`SOURCES.md`. Nothing is fetched at runtime and **no generator scripts ship with the repository** —
+`map-data.js` is a pre-built data file.
+
+## Limitations
+
+- Rounded, museum-typical values are used for teaching; where sources disagree a range or a “source-dependent” note is shown.
+- The 2D silhouettes and the 3D mesh come from **one dimension-constrained station dataset** (`VG`): axial stations from the nose tip, fin planforms in z/r, and a display-only nozzle. The body is a monotone-cubic (Fritsch–Carlson) Hermite profile, so the cylindrical run stays straight and nothing can overshoot the declared maximum radius.
+- Those station lists are **explanatory reconstructions**, not archival mould lines — see the confidence table and the outstanding-verification note in `SOURCES.md`. The app shows each vehicle's confidence level and an automatic L/D consistency check.
+- The 3D airframe is a proportional explanatory mesh, not a manufacturing reconstruction.
+- The map's **local** coastline and the A–J letters are traced from the 1943 Bomber Command target chart in this repo; the wider land/sea background is Natural Earth 1:50m public-domain vector data. It is a simplified, non-navigational interpretation, not a georeferenced chart.
+- The ballistic arc omits powered ascent, changing mass, aerodynamic drag, guidance, and winds. In the engine view the powered phase uses teaching approximations for altitude and downrange distance; the coast, apogee and descent use a drag model of the A4 with an exponential atmosphere.
+
+See `SOURCES.md` for the field-by-field evidence matrix and `QA.md` for the test record.
+
+## Files
+
+- `a-series-flight-lab.html` — the application (single entry file, all CSS/JS inline)
+- `map-data.js` — pre-built Natural Earth 50m land/coast vectors for the trajectory background
+- `peenemunde.jpg` — the 1943 Bomber Command target chart the map's local coastline and A–J positions are traced from
+- `index.html` — GitHub Pages redirect
+- `.nojekyll` — Pages helper
+- `SOURCES.md` — sources, map provenance, shape derivation, evidence matrix
+- `QA.md` — test record
+- `README.md` — this file
+
+There are no build files, package manifests, generator scripts or scratch files: the repository contains
+exactly the eight files listed above.
