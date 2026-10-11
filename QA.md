@@ -268,9 +268,9 @@ Static single-file app (`a-series-flight-lab.html`). No server, no build, no ext
 - [x] A `<noscript>` notice explains that every diagram is drawn at run time and links the written record
       (`SOURCES.md`, `QA.md`) for readers without scripting.
 - [x] `SOURCES.md` is a real link in the page footer, next to a build and data-revision stamp.
-- [x] The video is **named but not linked** — header pill and notice both, while it is not yet public. The
-      pill is a plain `<span>` with no `href`, no pointer cursor and no hover state, so it does not read as
-      clickable. Nothing is fetched at run time, so the app still works offline and from `file://`.
+- [x] The video is **linked** — header pill and notice both — now that it is public. The pill is an `<a>`
+      with `href`, `target="_blank"` and `rel="noopener"`; its hover state makes it read as clickable.
+      Nothing is fetched at run time, so the app still works offline and from `file://`.
 - [x] The page never describes itself as a companion (the word appears only in the disclaimer that denies it):
       the `<title>`, notice and footer call it an unofficial fan-made study, and the creator is named only to
       disclaim affiliation or to label the video this page follows.

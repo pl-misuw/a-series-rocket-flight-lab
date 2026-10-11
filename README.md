@@ -2,7 +2,7 @@
 
 An interactive, fan-made history and physics visualizer for the German **A1, A2, A3, and A4/V-2** rockets, centered on the Peenemünde test establishment.
 
-> **Unofficial fan-made study.** Made by a fan, independently — not an official companion, and not affiliated with, authorised by, sponsored by or endorsed by **Lord Hard Thrasher** or the channel. It follows *The V2 Story, part 1: 1934–1940 — A Pact with the Devil*, which is named in the header pill and the notice but **deliberately not linked** while it is not yet public. Adding the URL later means turning those two mentions back into anchors; nothing is fetched at run time either way, so the app works offline.
+> **Unofficial fan-made study.** Made by a fan, independently — not an official companion, and not affiliated with, authorised by, sponsored by or endorsed by **Lord Hard Thrasher** or the channel. It follows *The V2 Story, part 1: 1934–1940 — A Pact with the Devil*, linked from the header pill and the notice ([watch on YouTube](https://www.youtube.com/watch?v=htmEh5HSmLA)); nothing is fetched at run time, so the app works offline.
 
 ## Run it
 

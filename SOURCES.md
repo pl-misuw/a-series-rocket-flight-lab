@@ -26,16 +26,14 @@ schematics are **proportional explanatory models**, not manufacturing reconstruc
    22 June 1943, 1:100,000. Shipped with this repository as `peenemunde.jpg`. Source for the map's
    local coastline and the A–J target letters.
 10. **Lord Hard Thrasher (video)** — *The V2 Story : 1934–1940 — A Pact with the Devil*,
-   48 min 18 s, narrated video. Named in `a-series-flight-lab.html` but **deliberately not linked** while it
-   is not yet public. It is the source for the A3 recovery-parachute failure, the A4's
-   ≈25 t early specification and the note that the chamber may not have fired on the A1. Its own chapter
-   list and description were read on 2026-10-10.
+   48 min 18 s, narrated video. Linked from `a-series-flight-lab.html` in the header pill and the notice:
+   https://www.youtube.com/watch?v=htmEh5HSmLA. It is the source for the A3 recovery-parachute failure,
+   the A4's ≈25 t early specification and the note that the chamber may not have fired on the A1. Its own
+   chapter list and description were read on 2026-10-10.
 
-**The video is named, not linked.** `a-series-flight-lab.html` mentions the video twice — the header pill
-`#videoLink` (now a plain `<span>`, styled as a muted dashed pill) and the notice — and carries **no
-outbound URL for it**, at the author's request, because the video is not yet public. When it is, adding the
-link means turning both mentions back into anchors with `href`, `target="_blank"` and `rel="noopener"`.
-Nothing is fetched at run time either way, so the app works offline and from `file://`.
+**The video is linked, twice.** `a-series-flight-lab.html` links it in the header pill `#videoLink` (an
+`<a>` styled as an orange pill) and in the notice; both carry `href`, `target="_blank"` and
+`rel="noopener"`. Nothing is fetched at run time, so the app still works offline and from `file://`.
 
 ## What each source supplies
 
@@ -48,7 +46,9 @@ Nothing is fetched at run time either way, so the app works offline and from `fi
 | Historical Technical Museum Peenemünde | Site context and what the A–J targets were |
 | Deutsches Museum, NASA NTRS | Collection and technical reference |
 | Mittelbau-Dora Memorial | Production and forced-labour history |
-| Bomber Command chart G.U. 4384 | Map coastline + lettered facilities (measured — see below) || Lord Hard Thrasher, *The V2 Story* pt 1 | A3 parachute failure, A4 ≈25 t early specification, A1 “may not have fired” wording || Natural Earth 1:50m | Land and sea geometry for the wider map background |
+| Bomber Command chart G.U. 4384 | Map coastline + lettered facilities (measured — see below) |
+| Lord Hard Thrasher, *The V2 Story* pt 1 | A3 parachute failure, A4 ≈25 t early specification, A1 “may not have fired” wording |
+| Natural Earth 1:50m | Land and sea geometry for the wider map background |
 | In-app ballistic model | The ideal no-drag arc and curvature correction — derived, **not** a source |
 
 **Display units.** The app shows metric by default; the header toggle re-expresses *masses and lengths*
